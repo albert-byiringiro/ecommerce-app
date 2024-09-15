@@ -11,6 +11,6 @@ router.post('/', itemController.createItem)
 
 router.put('/:id', itemController.updateItem)
 
-
+router.delete('/:id', itemController.deleteItem)
 
 export default router

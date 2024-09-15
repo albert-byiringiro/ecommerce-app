@@ -83,3 +83,22 @@ export async function updateItem(req, res) {
         handleError(res, error)
     }
 }
+
+export async function deleteItem(req, res) {
+    try {
+        const db = getDB()
+        const id = new ObjectId(req.params.id)
+
+        const result = await db.collection('items').deleteOne(
+            { _id: id }
+        )
+
+        if (result.deletedCount === 0) {
+            return res.status(404).json({ error: 'Item not found' });
+        }
+
+        res.status(204).send()
+    } catch (error) {
+        handleError(res, error)
+    }
+}
