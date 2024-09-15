@@ -15,3 +15,19 @@ export async function getAllItems(req, res) {
         handleError(res, error);
     }
 }
+
+export async function getItemById(req, res) {
+    try {
+        const db = getDB()
+        const id = new ObjectId(req.params.id)
+        const item = await db.collection('items').findOne({ _id: id })
+
+        if (!item) {
+            return res.status(404).json({ error: 'Item not found' })
+        }
+
+        res.status(200).json(item)
+    } catch (error) {
+        handleError(res, error)
+    }
+}

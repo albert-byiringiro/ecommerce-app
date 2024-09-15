@@ -5,4 +5,7 @@ const router = express.Router()
 
 router.get('/', itemController.getAllItems)
 
+router.get('/:id', itemController.getItemById)
+
+
 export default router
