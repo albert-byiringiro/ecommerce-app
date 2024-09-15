@@ -31,3 +31,22 @@ export async function getItemById(req, res) {
         handleError(res, error)
     }
 }
+
+export async function createItem(req, res) {
+    try {
+        const db = getDB()
+        const { name, description, price } = req.body
+
+        if (!name || !description || !price) {
+            return res.status(400).json({ error: 'Missing required fields' });
+        }
+
+        const newItem = { name, description, price: parseFloat(price) }
+
+        const result = await db.collection('items').insertOne(newItem)
+
+        res.status(201).json({ _id: result.insertedId, ...newItem })
+    } catch (error) {
+        handleError(res, req)
+    }
+}
