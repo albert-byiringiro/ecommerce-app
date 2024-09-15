@@ -8,6 +8,10 @@ export async function connectToDatabase() {
 
         await client.connect();
 
+        // Get the database instance
+        db = client.db();
+        console.log('MongoDB connected');
+
     } catch (error) {
         console.error('MongoDB connection error:', error);
         throw error;
