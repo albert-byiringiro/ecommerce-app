@@ -20,9 +20,29 @@ app.get('/items', (req, res) => {
 app.get('/items/:id', (req, res) => {
     const product = products.find(product => product.id === parseInt(req.params.id));
     if (!product) {
-        return res.status(404).json({ error: 'Product not found' });
+        return res.status(404).json({ error: 'Product not found' })
     }
     res.status(200).json(product)
+})
+
+app.post('/items', (req, res) => {
+    const { name, description, price } = req.body
+
+    if (!name) {
+        return res.status(400).json({ error: 'Product name is required' })
+    }
+
+    if (!description) {
+        return res.status(400).json({ error: 'Product description is required' })
+    }
+
+    if (!price) {
+        return res.status(400).json({ error: 'Product price is required' })
+    }
+
+    const newProduct = { id: products.length + 1, name, description, price }
+
+    res.status(201).json(newProduct)
 })
 
 app.listen(PORT, () => {
