@@ -45,6 +45,20 @@ app.post('/items', (req, res) => {
     res.status(201).json(newProduct)
 })
 
+app.put('/items/:id', (req, res) => {
+    const productIndex = products.findIndex(product => product.id === parseInt(req.params.id));
+
+    if (productIndex === -1) {
+        return res.status(404).json({ error: 'Product not found' })
+    }
+
+    const updateProduct = { ...products[productIndex], ...req.body, id: products[productIndex].id }
+
+    products[productIndex] = updateProduct
+
+    res.status(200).json(updateProduct)
+})
+
 app.listen(PORT, () => {
     console.log(`Server listening on port: ${PORT}`)
 })
