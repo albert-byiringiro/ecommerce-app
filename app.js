@@ -46,7 +46,7 @@ app.post('/items', (req, res) => {
 })
 
 app.put('/items/:id', (req, res) => {
-    const productIndex = products.findIndex(product => product.id === parseInt(req.params.id));
+    const productIndex = products.findIndex(product => product.id === parseInt(req.params.id))
 
     if (productIndex === -1) {
         return res.status(404).json({ error: 'Product not found' })
@@ -57,6 +57,18 @@ app.put('/items/:id', (req, res) => {
     products[productIndex] = updateProduct
 
     res.status(200).json(updateProduct)
+})
+
+app.delete('/items/:id', (req, res) => {
+    const productIndex = products.findIndex(product => product.id === parseInt(req.params.id))
+
+    if (productIndex === -1) {
+        return res.status(404).json({ error: 'Product not found' })
+    }
+
+    products.splice(productIndex, 1);
+
+    res.status(204).send()
 })
 
 app.listen(PORT, () => {
